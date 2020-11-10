@@ -3,6 +3,7 @@ package servidor;
 import servidor.utilidades.UtilidadesConsola;
 import servidor.utilidades.UtilidadesRMIServidor;
 import servidor.sop_rmi.ServidorCllbckImpl;
+import servidor.sop_rmi.estadisticaImp;
 
 public class ServidorDeObjetos {
     public static void main(String args[])
@@ -17,9 +18,12 @@ public class ServidorDeObjetos {
         try
         {
             ServidorCllbckImpl objRemoto = new ServidorCllbckImpl();  
+            estadisticaImp objRemotoE = new estadisticaImp(objRemoto);
             UtilidadesRMIServidor.ArrancarNS(numPuertoRMIRegistry);
-            UtilidadesRMIServidor.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry,"ServidorUsuarios");            
-            System.out.println("Objeto remoto registrado, esperado peticiones ...");
+            UtilidadesRMIServidor.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry,"ServidorUsuarios");
+            UtilidadesRMIServidor.RegistrarObjetoRemoto(objRemotoE, direccionIpRMIRegistry, numPuertoRMIRegistry,"ServidorEstadisticas");            
+            
+            System.out.println("Los Objetos remotos fueron registrados, esperado peticiones ...");
         } catch (Exception e)
         {
             System.err.println("No se pudo Arrancar el NS o Registrar el objeto remoto");
